@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./index_css.css" type="text/css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="titlebar">
+            <p class="titlebar_p">各种操作</P>
+        </div>
+        <el-collapse>
+            <el-collapse-item title="A：获取图谱科技Token" name="1">
+                <el-form ref="form" v-model="gettokenform" label-width="120px" inline>
+                    <el-form-item label="图谱Key">
+                        <el-input v-model="gettokenform.key" size="mini" placeholder="请输入Key值，注意保密" style="width:200px"></el-input>
+                    </el-form-item>
+                    <el-form-item label="图谱screct">
+                        <el-input v-model="gettokenform.screct" size="mini" placeholder="请输入screct值，注意保密" style="width:200px"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" v-on:click="gettoken()" size="mini">获取Token值</el-button>
+                    </el-form-item>
+                    <el-form-item label="返回的Token值">
+                        <el-input v-model="token" readonly size="mini" style="width:650px"></el-input>
+                    </el-form-item>
+                </el-form>
+            </el-collapse-item>
+            <el-collapse-item title="B：" name="2">
+
+            </el-collapse-item>
+        </el-collapse>
+    </div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+<script>
+    vm = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                getkeyurl: "http://www.dcrm.com/src/gettoken.php",
+                getkeybody: {},
+                gettokenform: {
+                    key: 'tgr3cu3q1r63ib85k7lbrcchp1vu1elolbpbqrgl',
+                    screct :'9ld2fq1g2n3pt1sat4cts7060nkndaisql9fjoo7'
+                },
+                token: null
+
+            }
+        },
+        methods: {
+            gettoken: function () {
+                this.$http.post(this.getkeyurl, this.gettokenform, {
+                    emulateJSON: true
+                }).then(function (res) {
+                    console.log(res.data);
+                    this.token = res.data.token;
+                }, function (res) {
+                    console.log(res.status)
+                })
+            }
+        }
+    })
+</script>
+
+</html>
