@@ -32,35 +32,34 @@
             </el-collapse-item>
             <el-collapse-item title="B：获得客户流数据" name="2">
                 <el-form ref="form" v-mode="getvisitorsform" labed-width="120px" inline>
-                    <el-form-item label="访客分类">
+                    <el-row>
+                        <el-form-item label="访客分类">
+                            <el-select v-model="getvisitorsform.tag.value" placeholder="请选择" size="mini">
+                                <el-option v-for="item in getvisitorsform.tag.options" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="排序方式">
+                            <el-select v-model="getvisitorsform.sortBy.value" placeholder="请选择" size="mini">
+                                <el-option v-for="item in getvisitorsform.sortBy.options" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="升降序选择">
 
-                        <el-select v-model="getvisitorsform.tag.value" placeholder="请选择" size="mini">
-                            <el-option v-for="item in getvisitorsform.tag.options" :key="item.value" :label="item.label"
-                                :value="item.value">
-                            </el-option>
-                        </el-select>
+                            <el-select v-model="getvisitorsform.sortOrder.value" placeholder="请选择" size="mini">
+                                <el-option v-for="item in getvisitorsform.sortOrder.options" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
 
-                    </el-form-item>
+                        </el-form-item>
+                    </el-row>
+                    <el-row>
+                        <el-input size="mini">
 
-                    <el-form-item label="排序方式">
+                        </el-input>
+                    </el-row>
 
-                        <el-select v-model="getvisitorsform.sortBy.value" placeholder="请选择" size="mini">
-                            <el-option v-for="item in getvisitorsform.sortBy.options" :key="item.value" :label="item.label"
-                                :value="item.value">
-                            </el-option>
-                        </el-select>
-
-                    </el-form-item>
-
-                    <el-form-item label="升降序选择">
-
-                        <el-select v-model="getvisitorsform.sortOrder.value" placeholder="请选择" size="mini">
-                            <el-option v-for="item in getvisitorsform.sortOrder.options" :key="item.value" :label="item.label"
-                                :value="item.value">
-                            </el-option>
-                        </el-select>
-
-                    </el-form-item>
 
                 </el-form>
             </el-collapse-item>
@@ -76,7 +75,7 @@
 <script>
     vm = new Vue({
         el: '#app',
-        data: function () {
+        data: function() {
             return {
                 getkeyurl: "http://www.dcrm.com/src/gettoken.php",
                 getkeybody: {},
@@ -112,47 +111,45 @@
                     },
                     sortBy: {
                         options: [{
-                                value: "",
-                                label: "无排序"
-                            },
-                            {
-                                value: "firstEnterTime",
-                                label: "第一次进入时间"
-                            }, {
-                                value: "start",
-                                label: "进入时间"
-                            }, {
-                                value: "lastCaputuredTime",
-                                label: "最新拍摄到的时间"
-                            }, {
-                                value: "end",
-                                label: "最近出现时间"
-                            }, {
-                                value: "visitDuration",
-                                label: "来访时间"
-                            }, {
-                                value: "duration",
-                                label: "停留时间"
-                            }, {
-                                value: "visitCount",
-                                label: "来访次数"
-                            }, {
-                                value: "visitCountOfDay",
-                                label: "来访天数"
-                            }, {
-                                value: "historyVisitCount",
-                                label: "历史来访次数"
-                            }, {
-                                value: "visitSum",
-                                label: "历史总来访次数"
-                            }, {
-                                value: "historyDailyVisitCount",
-                                label: "历史日来访次数"
-                            }, {
-                                value: "visitDays",
-                                label: "历史来访天数"
-                            }
-                        ],
+                            value: "",
+                            label: "无排序"
+                        }, {
+                            value: "firstEnterTime",
+                            label: "第一次进入时间"
+                        }, {
+                            value: "start",
+                            label: "进入时间"
+                        }, {
+                            value: "lastCaputuredTime",
+                            label: "最新拍摄到的时间"
+                        }, {
+                            value: "end",
+                            label: "最近出现时间"
+                        }, {
+                            value: "visitDuration",
+                            label: "来访时间"
+                        }, {
+                            value: "duration",
+                            label: "停留时间"
+                        }, {
+                            value: "visitCount",
+                            label: "来访次数"
+                        }, {
+                            value: "visitCountOfDay",
+                            label: "来访天数"
+                        }, {
+                            value: "historyVisitCount",
+                            label: "历史来访次数"
+                        }, {
+                            value: "visitSum",
+                            label: "历史总来访次数"
+                        }, {
+                            value: "historyDailyVisitCount",
+                            label: "历史日来访次数"
+                        }, {
+                            value: "visitDays",
+                            label: "历史来访天数"
+                        }],
                         value: ""
                     },
                     sortOrder: {
@@ -164,19 +161,21 @@
                             label: "升序"
                         }],
                         value: ""
-                    }
-
+                    },
+                    date: "",
+                    start: "",
+                    end: ""
                 }
             }
         },
         methods: {
-            gettoken: function () {
+            gettoken: function() {
                 this.$http.post(this.getkeyurl, this.gettokenform, {
                     emulateJSON: true
-                }).then(function (res) {
+                }).then(function(res) {
                     console.log(res.data);
                     this.token = res.data.token;
-                }, function (res) {
+                }, function(res) {
                     console.log(res.status)
                 })
             }
