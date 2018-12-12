@@ -13,4 +13,17 @@ function Month2Normal($month){
     $m=$m+1;
     return (string)$m;
 }
+
+function http_build_query2($data){
+    $obj=array();
+    foreach ($data as $x=>$x_value){
+        if ($x_value!=""){
+            $obj[$x]=$x_value;
+        }
+    }
+    return http_build_query($obj);
+}
+
+
+
 ?>
