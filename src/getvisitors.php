@@ -40,16 +40,22 @@ for ($i = 0; $i < $count; $i++) {
     $name = $php_body->visitors[$i]->name;
     $type = $php_body->visitors[$i]->type;
     $sex = $php_body->visitors[$i]->attributes[0]->text;
-    $age = $php_body->visitors[$i]->attributes[1]->text;
+    $age = $php_body->visitors[$i]->attributes[2]->text;
     $faceposition_jsonstr=json_encode($php_body->visitors[$i]->thumbnail->facePosition);
     $imageurl = $domains_large . $php_body->visitors[$i]->thumbnail->path;
+    $start=$php_body->visitors[$i]->start;
 
-    //$formatstr = "INSERT INTO visitdate (personID, visitdate) VALUE ( key1, key2 )";
-    $formatstr = "INSERT INTO visitors (personId, name, type, sex, age, imageurl, faceposition) VALUES ('key0', 'key1', 'key2', 'key3', 'key4', 'key5', 'key6')";
-    $valuedict = array("key0" => $personId, "key1" => $name, "key2" => $type, "key3" => $sex, "key4" => $age, "key5" => $imageurl, "key6"=>$faceposition_jsonstr);
-    $sqlstr = create_sqlstr($formatstr, $valuedict);
-    echo $sqlstr;
-    newsql($servername, $username, $password, $dbname, $sqlstr);
+    $formatstr1 = "INSERT INTO visitdate (personId, name, date) VALUE ( 'key0', 'key1', 'key2' )";
+    $valuedict1=array("key0"=>$personId, "key1"=>$name, "key2"=>$start);
+    $sqlstr1=create_sqlstr($formatstr1, $valuedict1);
+    echo $sqlstr1;
+    newsql($servername, $username, $password, $dbname, $sqlstr1);
+
+    $formatstr2 = "INSERT INTO visitors (personId, name, type, sex, age, imageurl, faceposition) VALUES ('key0', 'key1', 'key2', 'key3', 'key4', 'key5', 'key6')";
+    $valuedict2 = array("key0" => $personId, "key1" => $name, "key2" => $type, "key3" => $sex, "key4" => $age, "key5" => $imageurl, "key6"=>$faceposition_jsonstr);
+    $sqlstr2 = create_sqlstr($formatstr2, $valuedict2);
+    echo $sqlstr2;
+    newsql($servername, $username, $password, $dbname, $sqlstr2);
 }
 curl_close($ch);
 
