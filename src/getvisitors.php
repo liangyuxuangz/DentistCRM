@@ -56,6 +56,23 @@ for ($i = 0; $i < $count; $i++) {
     $sqlstr2 = create_sqlstr($formatstr2, $valuedict2);
     echo $sqlstr2;
     newsql($servername, $username, $password, $dbname, $sqlstr2);
+
+    /* $sqlstr3 = "DELETE \n"
+    . "FROM\n"
+    . " `visitors` \n"
+    . "WHERE id IN \n"
+    . " (SELECT \n"
+    . " t.id \n"
+    . " FROM\n"
+    . " (SELECT \n"
+    . " * \n"
+    . " FROM\n"
+    . " `visitors` r \n"
+    . " GROUP BY r.personId\n"
+    . " HAVING COUNT(*) > 1) AS t)\n"
+    . ""; */
+    $sqlstr3="DELETE FROM `visitors` WHERE id IN (SELECT MAX(t.id) FROM (SELECT * FROM `visitors` r GROUP BY r.personId HAVING COUNT(*) > 1) AS t)";
+    newsql($servername, $username, $password, $dbname, $sqlstr3);
 }
 curl_close($ch);
 
