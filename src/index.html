@@ -35,23 +35,20 @@
                     <el-row>
                         <el-form-item label="访客分类">
                             <el-select v-model="getvisitorsform.tag.value" placeholder="请选择" size="mini">
-                                <el-option v-for="item in getvisitorsform.tag.options" :key="item.value" :label="item.label"
-                                    :value="item.value">
+                                <el-option v-for="item in getvisitorsform.tag.options" :key="item.value" :label="item.label" :value="item.value">
                                 </el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="排序方式">
                             <el-select v-model="getvisitorsform.sortBy.value" placeholder="请选择" size="mini">
-                                <el-option v-for="item in getvisitorsform.sortBy.options" :key="item.value" :label="item.label"
-                                    :value="item.value">
+                                <el-option v-for="item in getvisitorsform.sortBy.options" :key="item.value" :label="item.label" :value="item.value">
                                 </el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="升降序选择">
 
                             <el-select v-model="getvisitorsform.sortOrder.value" placeholder="请选择" size="mini">
-                                <el-option v-for="item in getvisitorsform.sortOrder.options" :key="item.value" :label="item.label"
-                                    :value="item.value">
+                                <el-option v-for="item in getvisitorsform.sortOrder.options" :key="item.value" :label="item.label" :value="item.value">
                                 </el-option>
                             </el-select>
 
@@ -74,7 +71,7 @@
                     <el-row>
                         <el-form-item>
                             <el-button type="primary" v-on:click="getvisitors()" size="mini">获取</el-button>
-                          </el-form-item>
+                        </el-form-item>
                     </el-row>
                 </el-form>
             </el-collapse-item>
@@ -91,7 +88,7 @@
 <script>
     vm = new Vue({
         el: '#app',
-        data: function () {
+        data: function() {
             return {
                 getkeyurl: "http://www.dcrm.com/src/gettoken.php",
                 gettokenform: {
@@ -185,53 +182,53 @@
             }
         },
         methods: {
-            gettoken: function () {
+            gettoken: function() {
                 this.$http.post(this.getkeyurl, this.gettokenform, {
                     emulateJSON: true
-                }).then(function (res) {
+                }).then(function(res) {
                     console.log(res.data);
                     this.token = res.data.token;
-                }, function (res) {
+                }, function(res) {
                     console.log(res.status)
                 })
             },
-            getvisitors: function(){
-                obj=this.getvisitorsform;
-                bodyobj=new Object();
-                bodyobj.tag=obj.tag.value;
-                bodyobj.sortBy=obj.sortBy.value;
-                bodyobj.sortOrder=obj.sortOrder.value;
+            getvisitors: function() {
+                obj = this.getvisitorsform;
+                bodyobj = new Object();
+                bodyobj.tag = obj.tag.value;
+                bodyobj.sortBy = obj.sortBy.value;
+                bodyobj.sortOrder = obj.sortOrder.value;
 
-                if (obj.date!=""){
-                    bodyobj.date=obj.date.getFullYear()+"-"+month2normal(obj.date.getMonth())+"-"+obj.date.getDate();
-                }else{
-                    bodyobj.date="";
+                if (obj.date != "") {
+                    bodyobj.date = obj.date.getFullYear() + "-" + month2normal(obj.date.getMonth()) + "-" + obj.date.getDate();
+                } else {
+                    bodyobj.date = "";
                 }
-                if (obj.start!=""){
-                    bodyobj.start=obj.start.getFullYear()+"-"+month2normal(obj.start.getMonth())+"-"+obj.start.getDate();
-                }else{
-                    bodyobj.start="";
+                if (obj.start != "") {
+                    bodyobj.start = obj.start.getFullYear() + "-" + month2normal(obj.start.getMonth()) + "-" + obj.start.getDate();
+                } else {
+                    bodyobj.start = "";
                 }
-                if (obj.end!=""){
-                    bodyobj.end=obj.end.getFullYear()+"-"+month2normal(obj.end.getMonth())+"-"+obj.end.getDate();
-                }else{
-                    bodyobj.end="";
+                if (obj.end != "") {
+                    bodyobj.end = obj.end.getFullYear() + "-" + month2normal(obj.end.getMonth()) + "-" + obj.end.getDate();
+                } else {
+                    bodyobj.end = "";
                 }
- 
-                bodyobj.token=this.token;
-                bodyobj.UID=this.UID;
-                bodyobj.SID=this.SID;
-                bodyobj.token=this.token;
+
+                bodyobj.token = this.token;
+                bodyobj.UID = this.UID;
+                bodyobj.SID = this.SID;
+                bodyobj.token = this.token;
 
 
                 //console.log(bodyobj.date);
-            
+
                 this.$http.post(this.getvisitorsurl, bodyobj, {
                     emulateJSON: true
-                }).then(function (res) {
+                }).then(function(res) {
                     console.log(res.data);
                     //this.token = res.data;
-                }, function (res) {
+                }, function(res) {
                     console.log(res.status)
                 })
             }
