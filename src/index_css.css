@@ -1,12 +1,13 @@
 .titlebar
 {
     height: 30px;
-    background-color: cornflowerblue;
+    background-color: #409EFF;
 }
 
 .titlebar_p{
     line-height: 30px;
-    text-align: center
+    text-align: center;
+    color: brown;
 }
 
 .show{

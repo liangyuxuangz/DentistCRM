@@ -25,7 +25,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headerArray);
 $output = curl_exec($ch);
-echo $output;
+//echo $output;
 $servername = "www.dcrm.com";
 $username = "root";
 $password = "root";
@@ -52,24 +52,31 @@ for ($i = 0; $i < $count; $i++) {
     $start=$php_body->visitors[$i]->start;
     
     // $personId="08ef0220000a-cd98-8e11-4cc2-4a";
-    $formatstr = "UPDATE visitors SET imageurl='key0', age='key1', faceposition='key2' WHERE personId='key3'";
-    $valuedict=array("key0"=>$imageurl, "key1"=>$age, "key2"=>$faceposition_jsonstr, "key3"=>$personId);
+    $formatstr = "SELECT * FROM visitors WHERE personId='key0'";
+    $valuedict=array("key0"=>$personId);
     $sql=create_sqlstr($formatstr, $valuedict);
     //echo $sql;
     $result = $conn->query($sql);
 
     if ($result->num_rows) {
     // 输出数据
-        /* while($row = $result->fetch_assoc()) {
-            echo "id: " . $row["id"]. " - Name: " . $row["name"]. "<br>";
-        } */
-        echo $result->num_rows;
+        //echo "result->num_rows:";
+        //echo $result->num_rows;
+        while($row = $result->fetch_assoc()) {
+            //echo "id: " . $row["id"]. " - Name: " . $row["name"]. "<br>";
+            $formatstr="UPDATE visitors SET imageurl='key0', facePosition='key1' WHERE personId='key2'";
+            $valuedict=array("key0"=>$imageurl, "key1"=>$faceposition_jsonstr, "key2"=>$personId);
+            $sql=create_sqlstr($formatstr, $valuedict);
+            $conn->query($sql);
+        }
     } 
     else {
-        $formatstr = "INSERT INTO visitors (personId, name, type, sex, age, imageurl, facepositon) VALUES ('key0', 'key1', 'key2', 'key3', 'key4', 'key5', 'key6')";
+        $formatstr = "INSERT INTO visitors (personId, name, type, sex, age, imageurl, faceposition) VALUES ('key0', 'key1', 'key2', 'key3', 'key4', 'key5', 'key6')";
         $valuedict=array("key0"=>$personId, "key1"=>"NULL", "key2"=>$type, "key3"=>$sex, "key4"=>$age, "key5"=>$imageurl, "key6"=>$faceposition_jsonstr);
         $sql=create_sqlstr($formatstr, $valuedict);
         $conn->query($sql);
+        //echo "插入新记录";
+        //echo $sql;
     }
 }
 
