@@ -72,7 +72,7 @@ for ($i = 0; $i < $count; $i++) {
     } 
     else {
         $formatstr = "INSERT INTO visitors (personId, name, type, sex, age, imageurl, faceposition) VALUES ('key0', 'key1', 'key2', 'key3', 'key4', 'key5', 'key6')";
-        $valuedict=array("key0"=>$personId, "key1"=>"NULL", "key2"=>$type, "key3"=>$sex, "key4"=>$age, "key5"=>$imageurl, "key6"=>$faceposition_jsonstr);
+        $valuedict=array("key0"=>$personId, "key1"=>"", "key2"=>$type, "key3"=>$sex, "key4"=>$age, "key5"=>$imageurl, "key6"=>$faceposition_jsonstr);
         $sql=create_sqlstr($formatstr, $valuedict);
         $conn->query($sql);
         //echo "插入新记录";
