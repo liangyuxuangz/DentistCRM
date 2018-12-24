@@ -91,6 +91,15 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item>
+                            <el-button icon="el-icon-arrow-left" circle size="mini"></el-button>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-input v-mode="checkvisitorform.i_cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button icon="el-icon-arrow-right" circle size="mini"></el-button>
+                        </el-form-item>
+                        <el-form-item>
                             <el-button type="primary" size="mini">根据客户类型查看</el-button>
                         </el-form-item>
                     </el-row>
@@ -99,10 +108,57 @@
                             <el-input placeholder="请输入名字" v-mode="checkvisitorform.inputname" size="mini" clearable></el-input>
                         </el-form-item>
                         <el-form-item>
+                            <el-button icon="el-icon-arrow-left" circle size="mini"></el-button>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-input v-mode="checkvisitorform.i_cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button icon="el-icon-arrow-right" circle size="mini"></el-button>
+                        </el-form-item>
+                        <el-form-item>
                             <el-button type="primary" size="mini">根据客户名字查看</el-button>
                         </el-form-item>
                     </el-row>
+                    <el-row>
+                        <el-form-item label="客户性别">
+                            <el-select v-model="checkvisitorform.inputsex" placeholder="请选择性别" size="mini">
+                                <el-option label="男" value="男"></el-option>
+                                <el-option label="女" value="女"></el-option>
+                              </el-select>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button icon="el-icon-arrow-left" circle size="mini"></el-button>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-input v-mode="checkvisitorform.i_cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button icon="el-icon-arrow-right" circle size="mini"></el-button>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" size="mini">根据客户性别查看</el-button>
+                        </el-form-item>
+                    </el-row>
+                    <el-row>
+                        <el-form-item label="客户年龄">
+                            <el-input placeholder="请输入年龄" v-mode="checkvisitorform.inputage" size="mini" clearable></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button icon="el-icon-arrow-left" circle size="mini"></el-button>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-input v-mode="checkvisitorform.i_cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button icon="el-icon-arrow-right" circle size="mini"></el-button>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" size="mini">根据客户年龄查看</el-button>
+                        </el-form-item>
+                    </el-row>
                 </el-form>
+                <img v-bind:src="checkvisitorform.imgurl" alt="" style="width:640px;height:400px">
             </el-collapse-item>
         </el-collapse>
     </div>
@@ -254,7 +310,10 @@
                         }],
                         value: ""
                     },
-                    inputname:""
+                    inputname:"",
+                    inputage:"",
+                    inputsex:"",
+                    inputimgurl:"/resource/imagesample.jpg"
                 }
             }
         },
