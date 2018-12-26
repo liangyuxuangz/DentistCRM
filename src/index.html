@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <!-- import CSS -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <link rel="stylesheet" href="index_css.css" type="text/css">
+    <link rel="stylesheet" href="./index_css.css" type="text/css">
 </head>
 
 <body>
@@ -13,7 +13,7 @@
         <div class="titlebar">
             <p class="titlebar_p">各种的操作</P>
         </div>
-        <el-collapse>
+        <el-collapse accordion>
             <el-collapse-item title="A：获取图谱科技Token" name="1">
                 <el-form ref="form" v-model="gettokenform" label-width="120px" inline>
                     <el-form-item label="图谱Key">
@@ -31,7 +31,7 @@
                 </el-form>
             </el-collapse-item>
             <el-collapse-item title="B：获得客户流数据" name="2">
-                <el-form ref="form" v-mode="getvisitorsform" labed-width="120px" inline>
+                <el-form ref="form" v-model="getvisitorsform" labed-width="120px" inline>
                     <el-row>
                         <el-form-item label="访客分类">
                             <el-select v-model="getvisitorsform.tag.value" placeholder="请选择" size="mini">
@@ -81,11 +81,11 @@
                 </el-form>
             </el-collapse-item>
             <el-collapse-item title="C：查看客户数据" name="3">
-                <el-form ref="form" v-mode="checkvisitorform" labed-width="120px" inline>
+                <el-form ref="form" v-model="checkvisitorsform" labed-width="120px" inline>
                     <el-row>
                         <el-form-item label="客户类型">
-                            <el-select v-model="checkvisitorform.tag.value" placeholder="请选择" size="mini">
-                                <el-option v-for="item in checkvisitorform.tag.option" :key="item.value" :label="item.label"
+                            <el-select v-model="checkvisitorsform.tag.value" placeholder="请选择" size="mini">
+                                <el-option v-for="item in checkvisitorsform.tag.option" :key="item.value" :label="item.label"
                                     :value="item.value">
                                 </el-option>
                             </el-select>
@@ -94,71 +94,36 @@
                             <el-button icon="el-icon-arrow-left" circle size="mini"></el-button>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-mode="checkvisitorform.i_cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
+                            <el-input v-model="checkvisitorsform.i_cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-button icon="el-icon-arrow-right" circle size="mini"></el-button>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" size="mini">根据客户类型查看</el-button>
+                            <el-button type="primary" size="mini" v-on:click="checkvisitors()">根据客户条件查看</el-button>
                         </el-form-item>
                     </el-row>
                     <el-row>
                         <el-form-item label="客户名字">
-                            <el-input placeholder="请输入名字" v-mode="checkvisitorform.inputname" size="mini" clearable></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button icon="el-icon-arrow-left" circle size="mini"></el-button>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-input v-mode="checkvisitorform.i_cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button icon="el-icon-arrow-right" circle size="mini"></el-button>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" size="mini">根据客户名字查看</el-button>
+                            <el-input placeholder="请输入名字" v-model="checkvisitorsform.inputname" size="mini" clearable></el-input>
                         </el-form-item>
                     </el-row>
                     <el-row>
                         <el-form-item label="客户性别">
-                            <el-select v-model="checkvisitorform.inputsex" placeholder="请选择性别" size="mini">
+                            <el-select v-model="checkvisitorsform.inputsex" placeholder="请选择性别" size="mini">
+                                <el-option label="无" value="无"></el-option>
                                 <el-option label="男" value="男"></el-option>
                                 <el-option label="女" value="女"></el-option>
                               </el-select>
                         </el-form-item>
-                        <el-form-item>
-                            <el-button icon="el-icon-arrow-left" circle size="mini"></el-button>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-input v-mode="checkvisitorform.i_cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button icon="el-icon-arrow-right" circle size="mini"></el-button>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" size="mini">根据客户性别查看</el-button>
-                        </el-form-item>
                     </el-row>
                     <el-row>
                         <el-form-item label="客户年龄">
-                            <el-input placeholder="请输入年龄" v-mode="checkvisitorform.inputage" size="mini" clearable></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button icon="el-icon-arrow-left" circle size="mini"></el-button>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-input v-mode="checkvisitorform.i_cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button icon="el-icon-arrow-right" circle size="mini"></el-button>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" size="mini">根据客户年龄查看</el-button>
+                            <el-input placeholder="请输入年龄" v-model="checkvisitorsform.inputage" size="mini" clearable></el-input>
                         </el-form-item>
                     </el-row>
                 </el-form>
-                <img v-bind:src="checkvisitorform.imgurl" alt="" style="width:640px;height:400px">
+                <img src="/resource/imagesample.jpg" alt="" style="width:640px;height:400px">
             </el-collapse-item>
         </el-collapse>
     </div>
@@ -283,7 +248,8 @@
                     start: "",
                     end: ""
                 },
-                checkvisitorform: {
+                checkvisitorsurl:"http://www.dcrm.com/src/checkvisitors.php",
+                checkvisitorsform: {
                     tag: {
                         option: [{
                             value: "full",
@@ -370,6 +336,23 @@
                 }, function (res) {
                     console.log(res.status)
                 })
+            },
+            checkvisitors: function () {
+                obj = this.checkvisitorsform;
+                bodyobj = new Object();
+                bodyobj.tag = obj.tag.value;
+                bodyobj.name = obj.inputname;
+                bodyobj.sex = obj.inputsex;
+                bodyobj.age = obj.inputage;
+                console.log(bodyobj.name);
+
+                this.$http.post(this.checkvisitorsurl, bodyobj, {
+                    emulateJSON: true
+                }).then(function (res) {
+                    console.log(res.data);
+                }), function (res) {
+                    console.log(res.status)
+                }
             }
         }
     })
