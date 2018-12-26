@@ -251,10 +251,7 @@
                 checkvisitorsurl:"http://www.dcrm.com/src/checkvisitors.php",
                 checkvisitorsform: {
                     tag: {
-                        option: [{
-                            value: "full",
-                            label: "全部"
-                        },
+                        option: [
                         {
                             value: "staff",
                             label: "员工"
@@ -344,7 +341,7 @@
                 bodyobj.name = obj.inputname;
                 bodyobj.sex = obj.inputsex;
                 bodyobj.age = obj.inputage;
-                console.log(bodyobj.name);
+                //console.log(bodyobj.name);
 
                 this.$http.post(this.checkvisitorsurl, bodyobj, {
                     emulateJSON: true
