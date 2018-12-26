@@ -56,4 +56,16 @@ function create_sqlstr($formatstr, $replacedict)
     //echo $tmp;
 }
 
+function where_and($item, $value, $ifhead=0){
+    $tmp="";
+    if ($value!=""){
+        if ($ifhead==1){
+            $tmp=" " . $item . "='" . $value . "'";
+        }
+        else{
+            $tmp=" AND " . $item . "='" . $value . "'";
+        }
+    }
+    return $tmp;
+}
 ?>
