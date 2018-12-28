@@ -68,4 +68,8 @@ function where_and($item, $value, $ifhead=0){
     }
     return $tmp;
 }
+
+function changename($source, $list){
+    return $list[$source];
+}
 ?>
