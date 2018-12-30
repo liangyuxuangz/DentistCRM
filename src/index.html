@@ -49,7 +49,8 @@
                         </el-form-item>
                         <el-form-item label="升降序选择">
                             <el-select v-model="getvisitorsform.sortOrder.value" placeholder="请选择" size="mini">
-                                <el-option v-for="item in getvisitorsform.sortOrder.options" :key="item.value" :label="item.label" :value="item.value">
+                                <el-option v-for="item in getvisitorsform.sortOrder.options" :key="item.value" :label="item.label"
+                                    :value="item.value">
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -111,7 +112,7 @@
                                 <el-option label="无" value=""></el-option>
                                 <el-option label="男" value="1"></el-option>
                                 <el-option label="女" value="0"></el-option>
-                              </el-select>
+                            </el-select>
                         </el-form-item>
                     </el-row>
                     <el-row>
@@ -124,7 +125,8 @@
             </el-collapse-item>
             <el-collapse-item title="D：更新客户数据" name="4">
                 <template>
-                    <el-table :data="sql_result" style="width:100%" max-height="250" highlight-current-row @current-change="handleCurrentChange">
+                    <el-table :data="sql_result" style="width:100%" max-height="250" highlight-current-row
+                        @current-change="handleCurrentChange">
                         <el-table-column fixed prop="personId" label="客户图谱ID" width="360"></el-table-column>
                         <el-table-column fixed prop="usercode" label="客户编码" width="120"></el-table-column>
                         <el-table-column fixed prop="name" label="客户姓名" width="120"></el-table-column>
@@ -138,12 +140,25 @@
                             </template>
                         </el-table-column>
                     </el-table>
-                    
                 </template>
+
                 <br>
-                <img :src="editvisitordataform.imgsrc" alt="" style="width:640px;height:400px">
-                <!-- <canvas id="peoplecanvas" width="640" height="400" style="border:1px solid #000000"> -->
-                </canvas>
+                <el-card>
+                    <div style="height: 400px">
+                        <div style="position:absolute">
+                            <img id="peopleimge" :src="editvisitordataform.imgsrc" alt="" style="width:640px; height:400px">
+                        </div>
+                        <div style="position: absolute">
+                            <canvas id="peoplecanvas" width="640" height="400" style="border:1px solid #d3d3d3;">
+                            </canvas>
+                        </div>
+                    </div>
+                </el-card>
+
+
+            </el-collapse-item>
+            <el-collapse-item title="E：Other" name="5">
+
             </el-collapse-item>
         </el-collapse>
 
@@ -163,13 +178,13 @@
                         <el-option label="回头客户" value="3"></el-option>
                         <el-option label="新客户" value="4"></el-option>
                     </el-select>
-                </el-form-item>     
+                </el-form-item>
                 <el-form-item label="客户性别">
                     <el-select v-model="editvisitordataform.sex" placeholder="请选择性别" size="mini">
                         <!-- <el-option label="无" value=""></el-option> -->
                         <el-option label="男" value="1"></el-option>
                         <el-option label="女" value="0"></el-option>
-                      </el-select>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="客户年龄">
                     <el-input v-model="editvisitordataform.age" size="mini" width="100px"></el-input>
@@ -302,11 +317,10 @@
                     start: "",
                     end: ""
                 },
-                checkvisitorsurl:"http://www.dcrm.com/src/checkvisitors.php",
+                checkvisitorsurl: "http://www.dcrm.com/src/checkvisitors.php",
                 checkvisitorsform: {
                     tag: {
-                        option: [
-                        {
+                        option: [{
                             value: "staff",
                             label: "员工"
                         }, {
@@ -327,15 +341,15 @@
                         }],
                         value: ""
                     },
-                    inputname:"",
-                    inputage:"",
-                    inputsex:"",
+                    inputname: "",
+                    inputage: "",
+                    inputsex: "",
                     cnt: 0
                     // inputimgurl:"/resource/imagesample.jpg"
                 },
                 sql_result: null,
                 currentRow: null,
-                editvisitordataform:{
+                editvisitordataform: {
                     visible: 0,
                     usercode: "ABC",
                     name: "张三",
@@ -343,7 +357,7 @@
                     sex: "男",
                     age: "40",
                     imgsrc: "/resource/imagesample.jpg",
-                    faceposition:null
+                    faceposition: null
                 }
             }
         },
@@ -411,42 +425,50 @@
                 //console.log(bodyobj.name);
 
                 this.$http.post(this.checkvisitorsurl, bodyobj, {
-                    emulateJSON: true
-                }).then(function (res) {
-                    console.log(res.data);
-                    this.checkvisitorsform.cnt=res.data.length;
-                    this.sql_result=res.data;
-                }), function (res) {
-                    console.log(res.status)
-                }
+                        emulateJSON: true
+                    }).then(function (res) {
+                        console.log(res.data);
+                        this.checkvisitorsform.cnt = res.data.length;
+                        this.sql_result = res.data;
+                    }),
+                    function (res) {
+                        console.log(res.status)
+                    }
             },
-            handleCurrentChange: function(val){
-                this.currentRow=val;
-                this.editvisitordataform.imgsrc=this.currentRow.imageurl;
+            handleCurrentChange: function (val) {
+                this.currentRow = val;
+                this.editvisitordataform.imgsrc = this.currentRow.imageurl;
                 console.log(this.currentRow);
-                
-                /* var c=document.getElementById("peoplecanvas");
+
+                var c=document.getElementById("peoplecanvas");
+                console.log(c.id);
                 var ctx=c.getContext("2d");
-                var img=document.createElement("img");
-                img.src=this.editvisitordataform.imgsrc;
-                console.log(img.src);
-                ctx.drawImage(img, 0, 0); */
+                ctx.rect(20,20,150,150);
+                ctx.strokeStyle="red";
+                ctx.stroke();
+                var w=640;
+                var h=400;
+                
+                var objstr=this.currentRow.faceposition;
+                
+
+                
             },
-            deleterow: function(){
+            deleterow: function () {
 
             },
-            editrow: function(){
+            editrow: function () {
                 //console.log(this.currentRow);
-                this.editvisitordataform.usercode=this.currentRow.usercode;
-                this.editvisitordataform.name=this.currentRow.name;
-                this.editvisitordataform.type=this.currentRow.type;
-                this.editvisitordataform.sex=this.currentRow.sex;
-                this.editvisitordataform.age=this.currentRow.age;
+                this.editvisitordataform.usercode = this.currentRow.usercode;
+                this.editvisitordataform.name = this.currentRow.name;
+                this.editvisitordataform.type = this.currentRow.type;
+                this.editvisitordataform.sex = this.currentRow.sex;
+                this.editvisitordataform.age = this.currentRow.age;
                 //console.log(this.editvisitordataform);
-                this.editvisitordataform.visible=true;
+                this.editvisitordataform.visible = true;
             },
 
-            editvisitordata_confirm: function(){
+            editvisitordata_confirm: function () {
                 this.currentRow.usercode = this.editvisitordataform.usercode;
                 this.currentRow.name = this.editvisitordataform.name;
                 this.currentRow.type = this.editvisitordataform.type;
@@ -455,7 +477,7 @@
                 this.editvisitordataform.visible = false;
             },
 
-            editvisitordata_cancel: function(){
+            editvisitordata_cancel: function () {
                 //do nothing
             },
 
