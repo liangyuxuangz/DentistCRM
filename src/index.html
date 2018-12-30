@@ -90,15 +90,15 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item>
+                        <!-- <el-form-item>
                             <el-button icon="el-icon-arrow-left" circle size="mini"></el-button>
-                        </el-form-item>
+                        </el-form-item> -->
                         <el-form-item>
-                            <el-input v-model="checkvisitorsform.i_cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
+                            <el-input v-model="checkvisitorsform.cnt" size="mini" readonly="true" style="width: 100px;"></el-input>
                         </el-form-item>
-                        <el-form-item>
+                        <!-- <el-form-item>
                             <el-button icon="el-icon-arrow-right" circle size="mini"></el-button>
-                        </el-form-item>
+                        </el-form-item> -->
                         <el-form-item>
                             <el-button type="primary" size="mini" v-on:click="checkvisitors()">根据客户条件查看</el-button>
                         </el-form-item>
@@ -294,10 +294,11 @@
                     inputname:"",
                     inputage:"",
                     inputsex:"",
+                    cnt: 0
                     // inputimgurl:"/resource/imagesample.jpg"
                 },
                 sql_result: null,
-                currentRow: null
+                currentRow: null,
             }
         },
         methods: {
@@ -367,6 +368,7 @@
                     emulateJSON: true
                 }).then(function (res) {
                     console.log(res.data);
+                    this.checkvisitorsform.cnt=res.data.length;
                     this.sql_result=res.data;
                 }), function (res) {
                     console.log(res.status)
