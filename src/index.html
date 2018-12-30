@@ -48,13 +48,10 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="升降序选择">
-
                             <el-select v-model="getvisitorsform.sortOrder.value" placeholder="请选择" size="mini">
-                                <el-option v-for="item in getvisitorsform.sortOrder.options" :key="item.value" :label="item.label"
-                                    :value="item.value">
+                                <el-option v-for="item in getvisitorsform.sortOrder.options" :key="item.value" :label="item.label" :value="item.value">
                                 </el-option>
                             </el-select>
-
                         </el-form-item>
                     </el-row>
                     <el-row>
@@ -141,9 +138,48 @@
                             </template>
                         </el-table-column>
                     </el-table>
+                    
                 </template>
+                <br>
+                <img :src="editvisitordataform.imgsrc" alt="" style="width:640px;height:400px">
+                <!-- <canvas id="peoplecanvas" width="640" height="400" style="border:1px solid #000000"> -->
+                </canvas>
             </el-collapse-item>
         </el-collapse>
+
+        <el-dialog title="编辑客户数据" :visible.sync="editvisitordataform.visible" width="30%" :before-close="editvisitordata_handledgclose">
+            <el-form ref="form" :model="editvisitordataform" label-width="80px">
+                <el-form-item label="客户编码">
+                    <el-input v-model="editvisitordataform.code" size="mini" width="100px"></el-input>
+                </el-form-item>
+                <el-form-item label="客户姓名">
+                    <el-input v-model="editvisitordataform.name" size="mini" width="100px"></el-input>
+                </el-form-item>
+                <el-form-item label="客户类型">
+                    <el-select v-model="editvisitordataform.type" placeholder="请选择客户类型" size="mini">
+                        <el-option label="员工" value="员工"></el-option>
+                        <el-option label="普通客户" value="普通客户"></el-option>
+                        <el-option label="普通客户+注册客户" value="2"></el-option>
+                        <el-option label="回头客户" value="3"></el-option>
+                        <el-option label="新客户" value="4"></el-option>
+                    </el-select>
+                </el-form-item>     
+                <el-form-item label="客户性别">
+                    <el-select v-model="editvisitordataform.sex" placeholder="请选择性别" size="mini">
+                        <!-- <el-option label="无" value=""></el-option> -->
+                        <el-option label="男" value="1"></el-option>
+                        <el-option label="女" value="0"></el-option>
+                      </el-select>
+                </el-form-item>
+                <el-form-item label="客户年龄">
+                    <el-input v-model="editvisitordataform.age" size="mini" width="100px"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="editvisitordata_cancel">取 消</el-button>
+                <el-button type="primary" @click="editvisitordata_confirm">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </body>
 <!-- import Vue before Element -->
@@ -193,7 +229,7 @@
                             label: "员工"
                         }, {
                             value: "customer",
-                            label: "普通顾客"
+                            label: "普通客户"
                         }, {
                             value: "VIP",
                             label: "VIP"
@@ -202,10 +238,10 @@
                             label: "普通客户+注册客户"
                         }, {
                             value: "regularCustomer",
-                            label: "回头客"
+                            label: "回头客户"
                         }, {
                             value: "newCustomer",
-                            label: "新顾客"
+                            label: "新客户"
                         }],
                         value: ""
                     },
@@ -275,7 +311,7 @@
                             label: "员工"
                         }, {
                             value: "customer",
-                            label: "普通顾客"
+                            label: "普通客户"
                         }, {
                             value: "VIP",
                             label: "VIP"
@@ -284,7 +320,7 @@
                             label: "普通客户+注册客户"
                         }, {
                             value: "regularCustomer",
-                            label: "回头客"
+                            label: "回头客户"
                         }, {
                             value: "newCustomer",
                             label: "新顾客"
@@ -299,6 +335,16 @@
                 },
                 sql_result: null,
                 currentRow: null,
+                editvisitordataform:{
+                    visible: 0,
+                    usercode: "ABC",
+                    name: "张三",
+                    type: "新客户",
+                    sex: "男",
+                    age: "40",
+                    imgsrc: "/resource/imagesample.jpg",
+                    faceposition:null
+                }
             }
         },
         methods: {
@@ -376,13 +422,55 @@
             },
             handleCurrentChange: function(val){
                 this.currentRow=val;
+                this.editvisitordataform.imgsrc=this.currentRow.imageurl;
+                console.log(this.currentRow);
+                
+                /* var c=document.getElementById("peoplecanvas");
+                var ctx=c.getContext("2d");
+                var img=document.createElement("img");
+                img.src=this.editvisitordataform.imgsrc;
+                console.log(img.src);
+                ctx.drawImage(img, 0, 0); */
             },
             deleterow: function(){
 
             },
             editrow: function(){
-                
-            }
+                //console.log(this.currentRow);
+                this.editvisitordataform.usercode=this.currentRow.usercode;
+                this.editvisitordataform.name=this.currentRow.name;
+                this.editvisitordataform.type=this.currentRow.type;
+                this.editvisitordataform.sex=this.currentRow.sex;
+                this.editvisitordataform.age=this.currentRow.age;
+                //console.log(this.editvisitordataform);
+                this.editvisitordataform.visible=true;
+            },
+
+            editvisitordata_confirm: function(){
+                this.currentRow.usercode = this.editvisitordataform.usercode;
+                this.currentRow.name = this.editvisitordataform.name;
+                this.currentRow.type = this.editvisitordataform.type;
+                this.currentRow.sex = this.editvisitordataform.sex;
+                this.currentRow.age = this.editvisitordataform.age;
+                this.editvisitordataform.visible = false;
+            },
+
+            editvisitordata_cancel: function(){
+                //do nothing
+            },
+
+            /* editvisitordata_handledgclose: function(done){
+                if (this.editvisitordataform.confirm == 1) {
+                    this.currentRow.usercode = this.editvisitordataform.usercode;
+                    this.currentRow.name = this.editvisitordataform.name;
+                    this.currentRow.type = this.editvisitordataform.type;
+                    this.currentRow.sex = this.editvisitordataform.sex;
+                    this.currentRow.age = this.editvisitordataform.age;
+                    this.editvisitordataform.confirm = 0;
+                    console.log(this.currentRow);
+                }
+                console.log("hi");
+            } */
         }
     })
 </script>
