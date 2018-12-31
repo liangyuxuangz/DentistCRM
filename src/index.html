@@ -438,16 +438,26 @@
             handleCurrentChange: function (val) {
                 this.currentRow = val;
                 this.editvisitordataform.imgsrc = this.currentRow.imageurl;
-                console.log(this.currentRow);
-
-                var c=document.getElementById("peoplecanvas");
-                console.log(c.id);
-                var ctx=c.getContext("2d");
-                ctx.rect(20,20,150,150);
-                ctx.strokeStyle="red";
-                ctx.stroke();
+                
+                var fpstr=this.currentRow.faceposition;
+                var newfpstr=fpstr.replace(/\[|\]/gi,"");
+                //console.log(newfpstr);
+                
+                var fp=newfpstr.split(',');
+                //console.log(fp[0]);
                 var w=640;
                 var h=400;
+                var x0=w*fp[0];
+                var y0=h*fp[1];
+
+                var c=document.getElementById("peoplecanvas");
+                //console.log(c.id);
+                var ctx=c.getContext("2d");
+                c.height=c.height;//重新设置就会清屏
+                ctx.rect(x0,y0,50,50);
+                ctx.strokeStyle="red";
+                ctx.stroke();
+                
                 
                 var objstr=this.currentRow.faceposition;
                 
