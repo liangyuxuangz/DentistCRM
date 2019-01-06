@@ -136,7 +136,7 @@
                         <el-table-column fixed="right" label="操作" width="240">
                             <template slot-scope="scope">
                                 <el-button @click="editrow" type="text" size="mini">编辑</el-button>
-                                <el-button @click="deleterow" type="text" size="mini">删除</el-button>
+                                <el-button @click.native.prevent="deleterow(scope.$index, sql_result)" type="text" size="mini">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -349,8 +349,10 @@
                 },
                 sql_result: null,
                 currentRow: null,
+                editvisitordataurl: "http://www.dcrm.com/src/editvisitordata_confirm2db.php",
                 editvisitordataform: {
                     visible: 0,
+                    personId: "",
                     usercode: "ABC",
                     name: "张三",
                     type: "新客户",
@@ -358,7 +360,8 @@
                     age: "40",
                     imgsrc: "/resource/imagesample.jpg",
                     faceposition: null
-                }
+                },
+                delvisitorurl:"http://www.dcrm.com/src/delvisitor.php"
             }
         },
         methods: {
@@ -438,37 +441,51 @@
             handleCurrentChange: function (val) {
                 this.currentRow = val;
                 this.editvisitordataform.imgsrc = this.currentRow.imageurl;
-                
-                var fpstr=this.currentRow.faceposition;
-                var newfpstr=fpstr.replace(/\[|\]/gi,"");
+
+                var fpstr = this.currentRow.faceposition;
+                var newfpstr = fpstr.replace(/\[|\]/gi, "");
                 //console.log(newfpstr);
-                
-                var fp=newfpstr.split(',');
+
+                var fp = newfpstr.split(',');
                 //console.log(fp[0]);
-                var w=640;
-                var h=400;
-                var x0=w*fp[0];
-                var y0=h*fp[1];
+                var w = 640;
+                var h = 400;
+                var x0 = w * fp[0];
+                var y0 = h * fp[1];
 
-                var c=document.getElementById("peoplecanvas");
+                var c = document.getElementById("peoplecanvas");
                 //console.log(c.id);
-                var ctx=c.getContext("2d");
-                c.height=c.height;//重新设置就会清屏
-                ctx.rect(x0,y0,50,50);
-                ctx.strokeStyle="red";
+                var ctx = c.getContext("2d");
+                c.height = c.height; //重新设置就会清屏
+                ctx.rect(x0, y0, 50, 50);
+                ctx.strokeStyle = "red";
                 ctx.stroke();
-                
-                
-                var objstr=this.currentRow.faceposition;
-                
 
-                
+
+                var objstr = this.currentRow.faceposition;
+
+
+
             },
-            deleterow: function () {
+            deleterow: function (recindex, rows) {
+                console.log(recindex);
+                bodyobj = new Object();
+                bodyobj.personId=this.currentRow.personId;
+                console.log(bodyobj);
+                rows.splice(recindex,1);
 
+                this.$http.post(this.delvisitorurl, bodyobj, {
+                        emulateJSON: true
+                    }).then(function (res) {
+                        console.log(res.data);
+                    }),
+                    function (res) {
+                        console.log(res.status)
+                    }
             },
             editrow: function () {
                 //console.log(this.currentRow);
+                this.editvisitordataform.personId=this.currentRow.personId;
                 this.editvisitordataform.usercode = this.currentRow.usercode;
                 this.editvisitordataform.name = this.currentRow.name;
                 this.editvisitordataform.type = this.currentRow.type;
@@ -479,16 +496,39 @@
             },
 
             editvisitordata_confirm: function () {
+                //this.currentRow.personId = this.editvisitordataform.personId;
                 this.currentRow.usercode = this.editvisitordataform.usercode;
                 this.currentRow.name = this.editvisitordataform.name;
                 this.currentRow.type = this.editvisitordataform.type;
                 this.currentRow.sex = this.editvisitordataform.sex;
                 this.currentRow.age = this.editvisitordataform.age;
                 this.editvisitordataform.visible = false;
+
+                obj = this.editvisitordataform;
+                bodyobj = new Object();
+                bodyobj.personId=this.currentRow.personId;
+                bodyobj.usercode=this.currentRow.usercode;
+                bodyobj.name=this.currentRow.name;
+                bodyobj.type=this.currentRow.type;
+                bodyobj.sex=this.currentRow.sex;
+                bodyobj.age=this.currentRow.age;
+                
+                console.log(bodyobj);
+                this.$http.post(this.editvisitordataurl, bodyobj, {
+                        emulateJSON: true
+                    }).then(function (res) {
+                        console.log(res.data);
+                    }),
+                    function (res) {
+                        console.log(res.status)
+                    }
+
+
             },
 
             editvisitordata_cancel: function () {
                 //do nothing
+                this.editvisitordataform.visible = false;
             },
 
             /* editvisitordata_handledgclose: function(done){
