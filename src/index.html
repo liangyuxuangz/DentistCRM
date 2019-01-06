@@ -128,9 +128,9 @@
                     <el-table :data="sql_result" style="width:100%" max-height="250" highlight-current-row
                         @current-change="handleCurrentChange">
                         <el-table-column fixed prop="personId" label="客户图谱ID" width="360"></el-table-column>
-                        <el-table-column fixed prop="usercode" label="客户编码" width="120"></el-table-column>
+                        <el-table-column fixed prop="usercode" label="客户编码" width="240"></el-table-column>
                         <el-table-column fixed prop="name" label="客户姓名" width="120"></el-table-column>
-                        <el-table-column fixed prop="type" label="客户类型" width="120"></el-table-column>
+                        <el-table-column fixed prop="type" label="客户类型" width="240"></el-table-column>
                         <el-table-column fixed prop="sex" label="客户性别" width="120"></el-table-column>
                         <el-table-column fixed prop="age" label="客户年龄" width="120"></el-table-column>
                         <el-table-column fixed="right" label="操作" width="240">
@@ -174,16 +174,16 @@
                     <el-select v-model="editvisitordataform.type" placeholder="请选择客户类型" size="mini">
                         <el-option label="员工" value="员工"></el-option>
                         <el-option label="普通客户" value="普通客户"></el-option>
-                        <el-option label="普通客户+注册客户" value="2"></el-option>
-                        <el-option label="回头客户" value="3"></el-option>
-                        <el-option label="新客户" value="4"></el-option>
+                        <el-option label="普通客户+注册客户" value="普通客户+注册客户"></el-option>
+                        <el-option label="回头客户" value="回头客户"></el-option>
+                        <el-option label="新客户" value="新客户"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="客户性别">
                     <el-select v-model="editvisitordataform.sex" placeholder="请选择性别" size="mini">
                         <!-- <el-option label="无" value=""></el-option> -->
-                        <el-option label="男" value="1"></el-option>
-                        <el-option label="女" value="0"></el-option>
+                        <el-option label="男" value="男"></el-option>
+                        <el-option label="女" value="女"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="客户年龄">
