@@ -110,8 +110,8 @@
                         <el-form-item label="客户性别">
                             <el-select v-model="checkvisitorsform.inputsex" placeholder="请选择性别" size="mini">
                                 <el-option label="无" value=""></el-option>
-                                <el-option label="男" value="1"></el-option>
-                                <el-option label="女" value="0"></el-option>
+                                <el-option label="男" value="男人"></el-option>
+                                <el-option label="女" value="女人"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-row>
@@ -172,11 +172,12 @@
                 </el-form-item>
                 <el-form-item label="客户类型">
                     <el-select v-model="editvisitordataform.type" placeholder="请选择客户类型" size="mini">
-                        <el-option label="员工" value="员工"></el-option>
-                        <el-option label="普通客户" value="普通客户"></el-option>
-                        <el-option label="普通客户+注册客户" value="普通客户+注册客户"></el-option>
-                        <el-option label="回头客户" value="回头客户"></el-option>
-                        <el-option label="新客户" value="新客户"></el-option>
+                        <el-option label="staff" value="staff"></el-option>
+                        <el-option label="customer" value="customer"></el-option>
+                        <el-option label="VIP" value="VIP"></el-option>
+                        <el-option label="allCustomer" value="allCustomer"></el-option>
+                        <el-option label="regularCustomer " value="regularCustomer "></el-option>
+                        <el-option label="newCustomer" value="newCustomer"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="客户性别">
@@ -219,44 +220,44 @@
                 SID: '5a697383400b0115d512a555',
                 visitortype_option: [{
                     value: "staff",
-                    label: "员工"
+                    label: "staff"
                 }, {
                     value: "customer",
-                    label: "普通顾客"
+                    label: "customer"
                 }, {
                     value: "VIP",
                     label: "VIP"
                 }, {
                     value: "allCustomer",
-                    label: "普通客户+注册客户"
+                    label: "allCustomer"
                 }, {
                     value: "regularCustomer",
-                    label: "回头客"
+                    label: "regularCustomer "
                 }, {
                     value: "newCustomer",
-                    label: "新顾客"
+                    label: "newCustomer"
                 }],
                 getvisitorsurl: "http://www.dcrm.com/src/getvisitors.php",
                 getvisitorsform: {
                     tag: {
                         options: [{
                             value: "staff",
-                            label: "员工"
+                            label: "staff"
                         }, {
                             value: "customer",
-                            label: "普通客户"
+                            label: "customer"
                         }, {
                             value: "VIP",
                             label: "VIP"
                         }, {
                             value: "allCustomer",
-                            label: "普通客户+注册客户"
+                            label: "allCustomer"
                         }, {
                             value: "regularCustomer",
-                            label: "回头客户"
+                            label: "regularCustomer "
                         }, {
                             value: "newCustomer",
-                            label: "新客户"
+                            label: "newCustomer"
                         }],
                         value: ""
                     },
@@ -322,22 +323,22 @@
                     tag: {
                         option: [{
                             value: "staff",
-                            label: "员工"
+                            label: "staff"
                         }, {
                             value: "customer",
-                            label: "普通客户"
+                            label: "customer"
                         }, {
                             value: "VIP",
                             label: "VIP"
                         }, {
                             value: "allCustomer",
-                            label: "普通客户+注册客户"
+                            label: "allCustomer"
                         }, {
                             value: "regularCustomer",
-                            label: "回头客户"
+                            label: "regularCustomer "
                         }, {
                             value: "newCustomer",
-                            label: "新顾客"
+                            label: "newCustomer"
                         }],
                         value: ""
                     },
@@ -355,7 +356,7 @@
                     personId: "",
                     usercode: "ABC",
                     name: "张三",
-                    type: "新客户",
+                    type: "newCustomer",
                     sex: "男",
                     age: "40",
                     imgsrc: "/resource/imagesample.jpg",
