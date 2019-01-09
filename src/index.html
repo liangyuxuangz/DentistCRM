@@ -127,12 +127,12 @@
                 <template>
                     <el-table :data="sql_result" style="width:100%" max-height="250" highlight-current-row
                         @current-change="handleCurrentChange">
-                        <el-table-column fixed prop="personId" label="客户图谱ID" width="360"></el-table-column>
-                        <el-table-column fixed prop="usercode" label="客户编码" width="240"></el-table-column>
-                        <el-table-column fixed prop="name" label="客户姓名" width="120"></el-table-column>
-                        <el-table-column fixed prop="type" label="客户类型" width="240"></el-table-column>
-                        <el-table-column fixed prop="sex" label="客户性别" width="120"></el-table-column>
-                        <el-table-column fixed prop="age" label="客户年龄" width="120"></el-table-column>
+                        <el-table-column fixed prop="personId" label="客户图谱ID" width="280"></el-table-column>
+                        <el-table-column fixed prop="usercode" label="客户编码" width="200"></el-table-column>
+                        <el-table-column fixed prop="name" label="客户姓名" width="80"></el-table-column>
+                        <el-table-column fixed prop="type" label="客户类型" width="200"></el-table-column>
+                        <el-table-column fixed prop="sex" label="客户性别" width="80"></el-table-column>
+                        <el-table-column fixed prop="age" label="客户年龄" width="100"></el-table-column>
                         <el-table-column fixed="right" label="操作" width="240">
                             <template slot-scope="scope">
                                 <el-button @click="editrow" type="text" size="mini">编辑</el-button>
