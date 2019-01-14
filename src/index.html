@@ -125,10 +125,10 @@
             </el-collapse-item>
             <el-collapse-item title="D：更新客户数据" name="4">
                 <template>
-                    <el-table :data="sql_result" style="width:100%" max-height="250" highlight-current-row
+                    <el-table :data="sql_result" style="width:100%" max-height="200" highlight-current-row
                         @current-change="handleCurrentChange">
-                        <el-table-column fixed prop="personId" label="客户图谱ID" width="280"></el-table-column>
-                        <el-table-column fixed prop="usercode" label="客户编码" width="200"></el-table-column>
+                        <el-table-column fixed prop="personId" label="客户图谱ID" width="310"></el-table-column>
+                        <el-table-column fixed prop="usercode" label="客户编码" width="150"></el-table-column>
                         <el-table-column fixed prop="name" label="客户姓名" width="80"></el-table-column>
                         <el-table-column fixed prop="type" label="客户类型" width="200"></el-table-column>
                         <el-table-column fixed prop="sex" label="客户性别" width="80"></el-table-column>
@@ -379,6 +379,7 @@
             getvisitors: function () {
                 obj = this.getvisitorsform;
                 bodyobj = new Object();
+
                 bodyobj.tag = obj.tag.value;
                 bodyobj.sortBy = obj.sortBy.value;
                 bodyobj.sortOrder = obj.sortOrder.value;
