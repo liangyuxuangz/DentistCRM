@@ -157,8 +157,20 @@
 
 
             </el-collapse-item>
-            <el-collapse-item title="E：Other" name="5">
-
+            <el-collapse-item title="E：统计拜访记录" name="5">
+                <el-form ref="form" :model="getvisitcntform" label-width="130px">
+                    <el-form-item label="通过人员ID统计">
+                        <el-input v-model="getvisitcntform.personId" style="width:400px" size="mini"></el-input>
+                    </el-form-item>
+                    <el-form-item label="通过人员姓名统计">
+                        <el-input v-model="getvisitcntform.name" style="width:120px" size="mini"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="showvisitlist" size="mini">查询</el-button>
+                        <el-button type="primary" @click="getvisitcnt" size="mini">统计</el-button>
+                        <el-input v-model="getvisitcntform.cnt" size="mini" readonly="true" style="width: 60px;"></el-input>
+                    </el-form-item>
+                </el-form>
             </el-collapse-item>
         </el-collapse>
 
@@ -362,7 +374,13 @@
                     imgsrc: "/resource/imagesample.jpg",
                     faceposition: null
                 },
-                delvisitorurl:"http://www.dcrm.com/src/delvisitor.php"
+                delvisitorurl:"http://www.dcrm.com/src/delvisitor.php",
+                getvisitcnturl:"http://www.dcrm.com/src/getvisitcnt.php",
+                getvisitcntform:{
+                    personId: "",
+                    name:"",
+                    cnt:0
+                }
             }
         },
         methods: {
@@ -532,6 +550,27 @@
                 //do nothing
                 this.editvisitordataform.visible = false;
             },
+
+            getvisitcnt: function(){
+                obj = this.getvisitcntform;
+                bodyobj = new Object();
+                bodyobj.token=this.token;
+                bodyobj.personId=obj.personId;
+                bodyobj.name=obj.name;
+                bodyobj.UID=this.UID;
+                bodyobj.SID=this.SID;
+                
+                this.$http.post(this.getvisitcnturl, bodyobj, {
+                    emulateJSON: true
+                }).then(function (res) {
+                    console.log(res.data);
+                    this.getvisitcntform.cnt=res.data.visits.length;
+                    /*do something*/
+                }, function (res) {
+                    console.log(res.status)
+                })
+
+            }
 
             /* editvisitordata_handledgclose: function(done){
                 if (this.editvisitordataform.confirm == 1) {
