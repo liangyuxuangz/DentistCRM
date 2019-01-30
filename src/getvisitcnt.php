@@ -66,11 +66,36 @@
     $output = curl_exec($ch);
     //echo $output;
     $obj=json_decode($output);
-    var_dump($obj->visits[0]->start);
-    // echo $obj.visits;
-    //echo $obj['visits'][0];
-    //do something
-    //do something
+    //var_dump($obj->visits[1]->start);
+    //var_dump(count($obj->visits));
+    $len=count($obj->visits);
+    $newvisits=array();
+    for ($i=0; $i<$len; $i++){
+        $tmp=substr($obj->visits[$i]->start, 0, 10);
+        if (in_array($tmp, $newvisits)){
+            //do nothing
+        }else{
+            array_push($newvisits, $tmp);
+        }      
+    }
+    $newvisitsstr=json_encode($newvisits);
+    //echo $newvisitsstr;
+    echo count($newvisits);
+
+    $servername = "www.dcrm.com";
+    $username = "root";
+    $password = "root";
+    $dbname = "dcrm";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    // Check connection
+    if ($conn->connect_error) {
+        die("连接失败: " . $conn->connect_error);
+    } 
+    $formatstr = "UPDATE `visitors` SET `visithistory`='key0' WHERE `personId`='key1'";
+    $valuedict=array("key0"=>$newvisitsstr, "key1"=>$personId);
+    $sql=create_sqlstr($formatstr, $valuedict);
+    $result=$conn->query($sql); 
+    $conn->close();
 
     //关闭curl
     curl_close($ch);

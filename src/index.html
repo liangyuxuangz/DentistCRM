@@ -564,7 +564,7 @@
                     emulateJSON: true
                 }).then(function (res) {
                     console.log(res.data);
-                    this.getvisitcntform.cnt=res.data.visits.length;
+                    this.getvisitcntform.cnt=res.data;
 
                     /*do something*/
                 }, function (res) {
