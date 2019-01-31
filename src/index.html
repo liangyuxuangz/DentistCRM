@@ -170,6 +170,9 @@
                         <el-button type="primary" @click="getvisitcnt" size="mini">统计</el-button>
                         <el-input v-model="getvisitcntform.cnt" size="mini" readonly="true" style="width: 60px;"></el-input>
                     </el-form-item>
+                    <el-form-item label="拜访记录">
+                        <el-input v-model="getvisitcntform.history" style="width:600px" size="mini" readonly="true"></el-input>
+                    </el-form-item>
                 </el-form>
             </el-collapse-item>
         </el-collapse>
@@ -379,6 +382,7 @@
                 getvisitcntform:{
                     personId: "",
                     name:"",
+                    history:"",
                     cnt:0
                 }
             }
@@ -564,8 +568,8 @@
                     emulateJSON: true
                 }).then(function (res) {
                     console.log(res.data);
-                    this.getvisitcntform.cnt=res.data;
-
+                    this.getvisitcntform.cnt=res.data.count;
+                    this.getvisitcntform.history=res.data.list;
                     /*do something*/
                 }, function (res) {
                     console.log(res.status)

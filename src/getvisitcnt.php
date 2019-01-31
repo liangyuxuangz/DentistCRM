@@ -69,18 +69,19 @@
     //var_dump($obj->visits[1]->start);
     //var_dump(count($obj->visits));
     $len=count($obj->visits);
-    $newvisits=array();
+    $newlist=array();
     for ($i=0; $i<$len; $i++){
         $tmp=substr($obj->visits[$i]->start, 0, 10);
-        if (in_array($tmp, $newvisits)){
+        if (in_array($tmp, $newlist)){
             //do nothing
         }else{
-            array_push($newvisits, $tmp);
+            array_push($newlist, $tmp);
         }      
     }
+    $newvisits=array("count"=>$len, "list"=>$newlist);
     $newvisitsstr=json_encode($newvisits);
     //echo $newvisitsstr;
-    echo count($newvisits);
+    echo $newvisitsstr;
 
     $servername = "www.dcrm.com";
     $username = "root";
