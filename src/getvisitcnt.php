@@ -78,10 +78,11 @@
             array_push($newlist, $tmp);
         }      
     }
-    $newvisits=array("count"=>$len, "list"=>$newlist);
-    $newvisitsstr=json_encode($newvisits);
+    $count=count($newlist);
+    $data=array("count"=>$count, "list"=>$newlist);
+    $datastr=json_encode($data);
     //echo $newvisitsstr;
-    echo $newvisitsstr;
+    echo $datastr;
 
     $servername = "www.dcrm.com";
     $username = "root";
@@ -93,7 +94,7 @@
         die("连接失败: " . $conn->connect_error);
     } 
     $formatstr = "UPDATE `visitors` SET `visithistory`='key0' WHERE `personId`='key1'";
-    $valuedict=array("key0"=>$newvisitsstr, "key1"=>$personId);
+    $valuedict=array("key0"=>$datastr, "key1"=>$personId);
     $sql=create_sqlstr($formatstr, $valuedict);
     $result=$conn->query($sql); 
     $conn->close();
